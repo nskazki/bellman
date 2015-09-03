@@ -1,0 +1,33 @@
+{
+  "name": "bellman",
+  "version": "1.0.0",
+  "description": "pretty console logger",
+  "main": "src-build/index.js",
+  "scripts": {
+    "test-only": "babel-node test-project",
+    "test": "npm run build && npm run test-only",
+    "build": "babel src --retain-lines --source-maps inline --out-dir src-build --source-root=$PWD/src-build"
+  },
+  "keywords": [
+    "logger",
+    "console"
+  ],
+  "author": "nskazki@gmail.com",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nskazki/bellman.git"
+  },
+  "bugs": {
+    "url": "https://github.com/nskazki/bellman/issues"
+  },
+  "homepage": "https://github.com/nskazki/bellman#readme",
+  "dependencies": {
+    "chalk": "^1.1.1",
+    "lodash": "^3.10.1",
+    "moment": "^2.10.6"
+  },
+  "devDependencies": {
+    "babel": "^5.8.23"
+  }
+}
