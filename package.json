@@ -1,12 +1,13 @@
 {
   "name": "bellman",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "pretty console logger",
   "main": "src-build/index.js",
   "scripts": {
-    "test-only": "babel-node test-project",
-    "test": "npm run build && npm run test-only",
-    "build": "babel src --retain-lines --source-maps inline --out-dir src-build --source-root=$PWD/src-build"
+    "test-project": "babel-node test-project",
+    "build": "babel src --retain-lines --source-maps inline --out-dir src-build --source-root=$PWD/src-build",
+    "test": "npm run build && npm run test-project",
+    "install": "npm run build"
   },
   "keywords": [
     "logger",
