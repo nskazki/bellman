@@ -45,7 +45,7 @@ var logger = new Logger(userConfig)
 ```
 ![User output](/accompanying-files/user-output.png)
 
-# Config params
+### Config
  * `timeTmp` - Задает формат `:time` части. Для форматирования используется библиотека [moment](https://github.com/moment/moment).
  * `lineTmp` - Задает формат строки логируемого сообщения.
     * `:time` - Таймштамп, формат задается параметром `timeTmp`.
