@@ -4,7 +4,7 @@ import chalk from 'chalk'
 import moment from 'moment'
 import { dirname, normalize, join } from 'path'
 import { inspect, format } from 'util'
-import { isNull, isObject, isString, isFunction, lt,
+import { isNull, isObject, isString, isFunction, lt, includes,
   padLeft, padRight, extend,
   first, last, get, keys, values, chain } from 'lodash'
 
@@ -26,7 +26,7 @@ export default class Bellman {
   }
 
   log(level, ...args) {
-    let isForseType = !isString(this.opt.levels.find(l => l === level))
+    let isForseType = this.opt.levels.indexOf(level) === -1
     if (isForseType) level = 'info'
 
     if (lt(
@@ -110,9 +110,10 @@ export default class Bellman {
   }
 
   getCaller(error = new Error()) {
-    return this
-      .getStack(error)
-      .find(el => el.isPartOfProject)
+    return chain(this.getStack(error))
+      .filter(el => el.isPartOfProject)
+      .first()
+      .value()
   }
 
   getStack(error = new Error()) {
@@ -247,12 +248,12 @@ class StackEl {
 
   get isPartOfProject() {
     return !this.isPartOfNodeModules
-      && this.file.includes(this.projectDir)
+      && includes(this.file, this.projectDir)
   }
 
   get isPartOfNodeModules() {
-    return this.file.includes('node_modules')
-      || this.file.includes(join('bellman', 'src'))
+    return includes(this.file, 'node_modules')
+      || includes(this.file, join('bellman', 'src'))
   }
 
   static isStackEl(l) {
