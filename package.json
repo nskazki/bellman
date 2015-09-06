@@ -4,10 +4,12 @@
   "description": "pretty console logger",
   "main": "src-build/index.js",
   "scripts": {
-    "test-project": "babel-node test-project",
-    "build": "babel src --retain-lines --source-maps inline --out-dir src-build --source-root=$PWD/src-build",
-    "test": "npm run build && npm run test-project",
-    "install": "npm run build"
+    "build-src": "babel src --retain-lines --source-maps inline --out-dir src-build --source-root=$PWD/src-build",
+    "build-test-project": "babel test-project --retain-lines --source-maps inline --out-dir test-project-build --source-root=$PWD/test-project-build",
+    "build": "npm run build-src && npm run build-test-project",
+    "install": "npm run build",
+    "test-project": "node test-project-build",
+    "test": "npm run build && npm run test-project"
   },
   "keywords": [
     "logger",
