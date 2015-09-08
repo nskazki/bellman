@@ -213,7 +213,9 @@ class StackEl {
     let getFunc    = (raw) => last(/\s+at\s(.+)\s\(/.exec(raw))
 
     let getLine    = (el) => last(/:(\d+):/.exec(el))
-    let getFile    = (el) => normalize(last(/^(.+?):/.exec(el)))
+    let getFile    = (el) => /^(.+?):/.test(el)
+      ? normalize(last(/^(.+?):/.exec(el)))
+      : el
 
     this.projectDir = projectDir
     this.rawStackEl = rawStackEl
@@ -229,15 +231,21 @@ class StackEl {
   }
 
   get short() {
+    let fLine = isString(this.line)
+      ? `:${this.line}`
+      : ''
     return isString(this.func)
-      ? `    at ${this.func} (${this.shortFile}:${this.line})`
-      : `    at ${this.shortFile}:${this.line}`
+      ? `    at ${this.func} (${this.shortFile}${fLine})`
+      : `    at ${this.shortFile}${fLine}`
   }
 
   get full() {
+    let fLine = isString(this.line)
+      ? `:${this.line}`
+      : ''
     return isString(this.func)
-      ? `    at ${this.func} (${this.file}:${this.line})`
-      : `    at ${this.file}:${this.line}`
+      ? `    at ${this.func} (${this.file}${fLine})`
+      : `    at ${this.file}${fLine}`
   }
 
   get shortFile() {
