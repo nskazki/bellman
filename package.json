@@ -1,12 +1,13 @@
 {
   "name": "bellman",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "pretty console logger",
   "main": "src-build/index.js",
   "scripts": {
+    "prepublish": "npm run build",
     "build-src": "babel src --retain-lines --source-maps inline --out-dir src-build --source-root=$PWD/src-build",
     "build-test-project": "babel test-project --retain-lines --source-maps inline --out-dir test-project-build --source-root=$PWD/test-project-build",
-    "install": "npm run build-src && npm run build-test-project",
+    "build": "npm run build-src && npm run build-test-project",
     "test-project": "node test-project-build",
     "test": "npm run build && npm run test-project"
   },
@@ -27,7 +28,9 @@
   "dependencies": {
     "chalk": "^1.1.1",
     "lodash": "^3.10.1",
-    "moment": "^2.10.6",
+    "moment": "^2.10.6"
+  },
+  "devDependencies": {
     "babel": "^5.8.23"
   }
 }
