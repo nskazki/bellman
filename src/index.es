@@ -81,7 +81,8 @@ export default class Bellman {
       .map(el => this.opt.isFullStack ? el.full : el.short)
 
     let newLine = '\n    '
-    let message = `⬎ ${newLine}${value.toString()}`
+    let message = `⬎\n${value.toString()}`
+      .replace(/\n/g, newLine)
     return [ message, head, ...tail ].join(newLine)
   }
 
