@@ -1,6 +1,6 @@
 {
   "name": "bellman",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "pretty console logger",
   "main": "src-build/index.js",
   "scripts": {

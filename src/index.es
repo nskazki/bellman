@@ -92,7 +92,7 @@ export default class Bellman {
   }
 
   formatString(value) {
-    return value
+    return ('' + value)
       .replace(/\r/g, '')
       .replace(/\n/g, '\r\v')
   }
