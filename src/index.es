@@ -80,8 +80,14 @@ export default class Bellman {
       .filter(el => this.opt.isFullStack || el.isPartOfProject)
       .map(el => this.opt.isFullStack ? el.full : el.short)
 
+    let rawMsg = !/\[object/.test('' + value)
+      ? '' + value
+      : isString(value.message)
+        ? `Error: ${value.message}`
+        : `Error: ${JSON.stringify(value)}`
+
     let newLine = '\n    '
-    let message = `⬎\n${value.toString()}`
+    let message = `⬎\n${rawMsg}`
       .replace(/\n/g, newLine)
     return [ message, head, ...tail ].join(newLine)
   }
