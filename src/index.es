@@ -1,17 +1,25 @@
 'use strict';
 
-import chalk from 'chalk'
-import moment from 'moment'
+import { debugEvents, debugMethods } from 'simple-debugger'
 import { dirname, normalize, join } from 'path'
 import { inspect, format } from 'util'
 import { isNull, isObject, isString, isFunction, lt, includes,
   padLeft, padRight, extend,
   first, last, get, keys, values, chain } from 'lodash'
+import EventEmitter from 'events'
+import chalk from 'chalk'
+import moment from 'moment'
 
 let pervious = (value) => value
 
-export default class Bellman {
+export default class Bellman extends EventEmitter {
   constructor(opt = {}) {
+    super()
+
+    debugEvents(this)
+    debugMethods(this, [ 'on', 'once', 'emit',
+      'addListener', 'removeListener' ])
+
     this.opt = new BellmanOpt(opt)
     this.callers = [ '<unknow>' ]
     this.opt.levels.forEach(level => {
@@ -60,6 +68,7 @@ export default class Bellman {
       .replace(':message', message)
 
     levelLogger(line)
+    this.emit('log', level, callerPos, message, args)
 
     return this
   }
