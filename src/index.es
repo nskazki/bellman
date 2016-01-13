@@ -87,24 +87,30 @@ export default class Bellman extends EventEmitter {
   }
 
   formatError(value) {
-    let stack = this.getStack(value)
-    let head = this.opt.isFullStack
-      ? first(stack).full
-      : first(stack).short
-    let tail = stack.slice(1)
-      .filter(el => this.opt.isFullStack || el.isPartOfProject)
-      .map(el => this.opt.isFullStack ? el.full : el.short)
+    try {
+      let stack = this.getStack(value)
+      let head = this.opt.isFullStack
+        ? first(stack).full
+        : first(stack).short
+      let tail = stack.slice(1)
+        .filter(el => this.opt.isFullStack || el.isPartOfProject)
+        .map(el => this.opt.isFullStack ? el.full : el.short)
 
-    let rawMsg = !/\[object/.test('' + value)
-      ? '' + value
-      : isString(value.message)
-        ? `Error: ${value.message}`
-        : `Error: ${JSON.stringify(value)}`
+      let rawMsg = !/\[object/.test('' + value)
+        ? '' + value
+        : isString(value.message)
+          ? `Error: ${value.message}`
+          : `Error: ${JSON.stringify(value)}`
 
-    let newLine = '\n    '
-    let message = `⬎\n${rawMsg}`
-      .replace(/\n/g, newLine)
-    return [ message, head, ...tail ].join(newLine)
+      let newLine = '\n    '
+      let message = `⬎\n${rawMsg}`
+        .replace(/\n/g, newLine)
+      return [ message, head, ...tail ].join(newLine)
+    } catch (_err) {
+      return isString(value.stack) && (value.stack.length > 0)
+        ? `⬎\n${value.stack}`
+        : `${JSON.stringify(value)}`
+    }
   }
 
   formatObject(value) {
