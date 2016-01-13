@@ -11,7 +11,8 @@ import EventEmitter from 'events'
 import chalk from 'chalk'
 import moment from 'moment'
 
-let pervious = (value) => value
+let pervious = value => value
+let nonEmptyStr = value => isString(value) && (value.length > 0)
 
 export default class Bellman extends EventEmitter {
   constructor(opt = {}) {
@@ -107,9 +108,28 @@ export default class Bellman extends EventEmitter {
         .replace(/\n/g, newLine)
       return [ message, head, ...tail ].join(newLine)
     } catch (_err) {
-      return isString(value.stack) && (value.stack.length > 0)
-        ? `⬎\n${value.stack}`
-        : `${JSON.stringify(value)}`
+      if (true
+        && isObject(value)
+        && nonEmptyStr(value.stack) && nonEmptyStr(value.message)
+        && includes(value.stack, value.message)) {
+        return `⬎\n${value.stack}`.replace(/\n/g, newLine)
+      } else if (true
+        && isObject(value)
+        && nonEmptyStr(value.stack) && nonEmptyStr(value.message)) {
+        var newLine = '\n    '
+        var stack = value.stack
+          .split(/\n|\r/g)
+          .filter(el => isString(el) && (el.length > 0))
+          .map(el => el.replace(/^\s+/, ''))
+          .join(newLine)
+        return `⬎\nError: ${value.message}\nStack: ${stack}`.replace(/\n/g, newLine)
+      } else if (true
+        && isObject(value)
+        && (nonEmptyStr(value.message) || nonEmptyStr(value.stack))) {
+        return `⬎\nError: ${nonEmptyStr(value.message) ? value.message : value.stack}`.replace(/\n/g, newLine)
+      } else {
+        return `${JSON.stringify(value)}`
+      }
     }
   }
 
