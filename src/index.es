@@ -7,7 +7,7 @@ import { isNull, isObject, isString, isFunction, lt, includes,
   padLeft, padRight, extend,
   first, last, get, keys, values, chain } from 'lodash'
 import uncolor from 'uncolor'
-import EventEmitter from 'events'
+import { EventEmitter } from 'events'
 import chalk from 'chalk'
 import moment from 'moment'
 
