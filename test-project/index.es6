@@ -1,6 +1,6 @@
-'use strict';
+'use strict'
+
 import Logger from '../src-build'
-import { random } from 'lodash'
 
 function testLog(log) {
   log.reg()

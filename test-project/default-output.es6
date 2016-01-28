@@ -1,5 +1,8 @@
+'use strict'
+
 import Logger from '..'
-let log = new Logger()
+
+new Logger()
   .reg()
   .info('info message')
   .debug('debug message')

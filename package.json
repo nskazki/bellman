@@ -9,6 +9,7 @@
     "build-test-project": "babel test-project --retain-lines --out-dir test-project-build",
     "build": "npm run build-src && npm run build-test-project",
     "test-project": "DEBUG=debug* node test-project-build",
+    "eslint": "eslint $(find . -not -path '*/*-build/*' -and -not -path '*/node_modules/*' -type f -name '*.es6')",
     "test": "npm run build && npm run test-project"
   },
   "keywords": [
@@ -33,6 +34,8 @@
     "uncolor": "^0.4.0"
   },
   "devDependencies": {
-    "babel": "^5.8.23"
+    "babel": "^5.8.23",
+    "babel-eslint": "^4.1.6",
+    "eslint": "^1.10.3"
   }
 }
