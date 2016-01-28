@@ -1,1 +1,2 @@
-accompanying-files/
+*
+!/src-build/**
