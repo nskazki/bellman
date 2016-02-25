@@ -3,8 +3,9 @@
 import { debugEvents, debugMethods } from 'simple-debugger'
 import { dirname, normalize, join } from 'path'
 import { inspect, format } from 'util'
-import { isNull, isObject, isString,
-  isFunction, lt, includes, padRight,
+import {
+  isNull, isObject, isString, isFunction,
+  lt, includes, padRight, assign,
   first, last, get, keys, values, chain } from 'lodash'
 import uncolor from 'uncolor'
 import { EventEmitter } from 'events'
@@ -227,13 +228,12 @@ class BellmanOpt {
   }
 
   get levelMap() {
-    return this.opt.levelMap
-      || {
-        'debug': 'blue',
-        'info': 'green',
-        'warn': 'yellow',
-        'error': 'red'
-      }
+    let def = {
+      'debug': 'blue',
+      'info': 'green',
+      'warn': 'yellow',
+      'error': 'red' }
+    return assign(def, this.opt.levelMap)
   }
 
   get callerColor() {
