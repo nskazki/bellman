@@ -2,15 +2,15 @@
 
 import Logger from '../src'
 
-let userConfig = {
+const userConfig = {
   timeTmp: 'HH:mm',
   lineTmp: ':level :time :caller :message',
   colorize: true,
   callerColor: 'yellow.bold',
   levelMap: {
-    'debug': 'blue',
-    'info': 'green',
-    'panic': 'red'
+    debug: 'blue',
+    info: 'green',
+    panic: 'red'
   },
   levelMin: 'debug',
   isFullStack: true

@@ -15,7 +15,7 @@ function testLog(log) {
 }
 
 function main() {
-  let log = new Logger({ minLevel: 'warn' })
+  const log = new Logger({ minLevel: 'warn' })
   testLog(log)
 }
 

@@ -11,59 +11,59 @@ import { EventEmitter } from 'events'
 import chalk from 'chalk'
 import moment from 'moment'
 
-let pervious = value => value
-let nonEmptyStr = value => isString(value) && (value.length > 0)
+const pervious = value => value
+const nonEmptyStr = value => isString(value) && (value.length > 0)
 
 export default class Bellman extends EventEmitter {
   constructor(opt = {}) {
     super()
 
     debugEvents(this)
-    debugMethods(this, [ 'on', 'once', 'emit',
-      'addListener', 'removeListener' ])
+    debugMethods(this, ['on', 'once', 'emit', 'addListener', 'removeListener'])
 
     this.opt = new BellmanOpt(opt)
-    this.callers = [ '<unknow>' ]
+    this.callers = ['<unknow>']
     this.opt.levels.forEach(level => {
       this[level] = this.log.bind(this, level)
     })
   }
 
   reg() {
-    let caller = this.getCaller()
+    const caller = this.getCaller()
     if (isObject(caller)) this.callers.push(caller.shortFile)
     return this
   }
 
   log(level, ...args) {
-    let isForseType = this.opt.levels.indexOf(level) === -1
+    const isForseType = this.opt.levels.indexOf(level) === -1
     if (isForseType) level = 'info'
 
     if (lt(
         this.getLevelWeight(level),
-        this.getLevelWeight(this.opt.levelMin)))
+        this.getLevelWeight(this.opt.levelMin))) {
       return this
+    }
 
-    let strArgs = args.map(this.formatValue.bind(this))
-    let message = format(...strArgs)
+    const strArgs = args.map(this.formatValue.bind(this))
+    const message = format(...strArgs)
 
-    let caller = this.getCaller()
-    let callerPos = isObject(caller)
+    const caller = this.getCaller()
+    const callerPos = isObject(caller)
       ? `${caller.shortFile}:${caller.line}`
       : first(this.callers)
 
-    let timestamp = this.getTimestamp()
+    const timestamp = this.getTimestamp()
 
-    let levelLogger = (level === 'error')
+    const levelLogger = (level === 'error')
       ? console.error
       : console.info
-    let levelColor = this.opt.levelMap[level]
-    let levelDyer = this.getDyer(levelColor)
+    const levelColor = this.opt.levelMap[level]
+    const levelDyer = this.getDyer(levelColor)
 
-    let callerColor = this.opt.callerColor
-    let callerDyer = this.getDyer(callerColor)
+    const callerColor = this.opt.callerColor
+    const callerDyer = this.getDyer(callerColor)
 
-    let line = this.opt.lineTmp
+    const line = this.opt.lineTmp
       .replace(':time', timestamp)
       .replace(':level', levelDyer(padRight(level, this.levelPadSize)))
       .replace(':caller', callerDyer(padRight(callerPos, this.callerPadSize)))
@@ -81,32 +81,32 @@ export default class Bellman extends EventEmitter {
   }
 
   formatValue(value) {
-    let str = isObject(value)
+    const str = isObject(value)
       ? this.formatObject(value)
       : value
     return this.formatString(str)
   }
 
   formatError(value) {
+    const newLine = '\n    '
     try {
-      let stack = this.getStack(value)
-      let head = this.opt.isFullStack
+      const stack = this.getStack(value)
+      const head = this.opt.isFullStack
         ? first(stack).full
         : first(stack).short
-      let tail = stack.slice(1)
+      const tail = stack.slice(1)
         .filter(el => this.opt.isFullStack || el.isPartOfProject)
         .map(el => this.opt.isFullStack ? el.full : el.short)
 
-      let rawMsg = !/\[object/.test('' + value)
+      const rawMsg = !/\[object/.test('' + value)
         ? '' + value
         : isString(value.message)
           ? `Error: ${value.message}`
           : `Error: ${JSON.stringify(value)}`
 
-      let newLine = '\n    '
-      let message = `⬎\n${rawMsg}`
+      const message = `⬎\n${rawMsg}`
         .replace(/\n/g, newLine)
-      return [ message, head, ...tail ].join(newLine)
+      return [message, head, ...tail].join(newLine)
     } catch (_err) {
       if (true
         && isObject(value)
@@ -116,8 +116,7 @@ export default class Bellman extends EventEmitter {
       } else if (true
         && isObject(value)
         && nonEmptyStr(value.stack) && nonEmptyStr(value.message)) {
-        var newLine = '\n    '
-        var stack = value.stack
+        const stack = value.stack
           .split(/\n|\r/g)
           .filter(el => isString(el) && (el.length > 0))
           .map(el => el.replace(/^\s+/, ''))
@@ -194,7 +193,7 @@ export default class Bellman extends EventEmitter {
       return isNull(module.parent)
           ? dirname(module.filename)
           : _(module.parent)
-    })(module)
+    }(module))
   }
 }
 
@@ -229,10 +228,10 @@ class BellmanOpt {
   get levelMap() {
     return this.opt.levelMap
       || {
-        'debug': 'blue',
-        'info': 'green',
-        'warn': 'yellow',
-        'error': 'red'
+        debug: 'blue',
+        info: 'green',
+        warn: 'yellow',
+        error: 'red'
       }
   }
 
@@ -255,13 +254,13 @@ class BellmanOpt {
 
 class StackEl {
   constructor(rawStackEl, projectDir) {
-    let getFuncEl  = (raw) => last(/\((.+)\)/.exec(raw))
-    let getMainEl  = (raw) => last(/at\s(.+)/.exec(raw))
-    let getStackEl = (raw) => getFuncEl(raw) || getMainEl(raw)
-    let getFunc    = (raw) => last(/\s+at\s(.+)\s\(/.exec(raw))
+    const getFuncEl  = (raw) => last(/\((.+)\)/.exec(raw))
+    const getMainEl  = (raw) => last(/at\s(.+)/.exec(raw))
+    const getStackEl = (raw) => getFuncEl(raw) || getMainEl(raw)
+    const getFunc    = (raw) => last(/\s+at\s(.+)\s\(/.exec(raw))
 
-    let getLine    = (el) => last(/:(\d+):/.exec(el))
-    let getFile    = (el) => /^(.+?):/.test(el)
+    const getLine    = (el) => last(/:(\d+):/.exec(el))
+    const getFile    = (el) => /^(.+?):/.test(el)
       ? normalize(last(/^(.+?):/.exec(el)))
       : el
 
@@ -279,7 +278,7 @@ class StackEl {
   }
 
   get short() {
-    let fLine = isString(this.line)
+    const fLine = isString(this.line)
       ? `:${this.line}`
       : ''
     return isString(this.func)
@@ -288,7 +287,7 @@ class StackEl {
   }
 
   get full() {
-    let fLine = isString(this.line)
+    const fLine = isString(this.line)
       ? `:${this.line}`
       : ''
     return isString(this.func)
@@ -299,7 +298,7 @@ class StackEl {
   get shortFile() {
     return this.file
       .replace(this.projectDir, '')
-      .replace(/^[\/\\]/, '')
+      .replace(/^[/\\]/, '')
   }
 
   get isPartOfProject() {
