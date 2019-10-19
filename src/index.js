@@ -4,7 +4,7 @@ import { debugEvents, debugMethods } from 'simple-debugger'
 import { dirname, normalize, join } from 'path'
 import { inspect, format } from 'util'
 import { isNull, isObject, isString,
-  isFunction, lt, includes, padRight,
+  isFunction, lt, includes, padEnd,
   first, last, get, keys, values, chain } from 'lodash'
 import uncolor from 'uncolor'
 import { EventEmitter } from 'events'
@@ -65,8 +65,8 @@ export default class Bellman extends EventEmitter {
 
     const line = this.opt.lineTmp
       .replace(':time', timestamp)
-      .replace(':level', levelDyer(padRight(level, this.levelPadSize)))
-      .replace(':caller', callerDyer(padRight(callerPos, this.callerPadSize)))
+      .replace(':level', levelDyer(padEnd(level, this.levelPadSize)))
+      .replace(':caller', callerDyer(padEnd(callerPos, this.callerPadSize)))
       .replace(':message', message)
 
     levelLogger(line)
