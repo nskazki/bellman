@@ -26,7 +26,7 @@
   "dependencies": {
     "chalk": "^1.1.1",
     "lodash": "^4.17.15",
-    "moment": "^2.10.6",
+    "moment": "^2.24.0",
     "simple-debugger": "^1.0.3",
     "uncolor": "^0.4.0"
   },
