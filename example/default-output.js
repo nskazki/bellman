@@ -1,6 +1,6 @@
 'use strict'
 
-import Logger from '..'
+import Logger from '../src'
 
 new Logger()
   .reg()

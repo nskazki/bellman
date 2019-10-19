@@ -1,6 +1,6 @@
 'use strict'
 
-import Logger from '../src-build'
+import Logger from '../src'
 
 function testLog(log) {
   log.reg()

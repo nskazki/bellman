@@ -2,15 +2,12 @@
   "name": "bellman",
   "version": "1.1.8",
   "description": "pretty console logger",
-  "main": "src-build/index.js",
+  "main": "build",
   "scripts": {
     "prepublish": "npm run build",
-    "build-src": "babel src --retain-lines --out-dir src-build",
-    "build-test-project": "babel test-project --retain-lines --out-dir test-project-build",
-    "build": "npm run build-src && npm run build-test-project",
-    "test-project": "DEBUG=debug* node test-project-build",
-    "eslint": "eslint src test-project",
-    "test": "npm run build && npm run test-project"
+    "build": "babel src -d build",
+    "eslint": "eslint src example",
+    "test": "npm run eslint"
   },
   "keywords": [
     "logger",
@@ -34,8 +31,10 @@
     "uncolor": "^0.4.0"
   },
   "devDependencies": {
-    "babel": "^5.8.23",
-    "babel-eslint": "^4.1.6",
+    "@babel/cli": "^7.6.4",
+    "@babel/core": "^7.6.4",
+    "@babel/node": "^7.6.3",
+    "@babel/preset-env": "^7.6.3",
     "eslint": "^1.10.3"
   }
 }

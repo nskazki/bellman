@@ -1,6 +1,7 @@
 'use strict'
 
-let Logger = require('..')
+import Logger from '../src'
+
 let userConfig = {
   timeTmp: 'HH:mm',
   lineTmp: ':level :time :caller :message',
