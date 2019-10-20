@@ -8,12 +8,12 @@ yarn add bellman
 
 ## Methods
 
- - `reg` - registers a file from which methods that print console messages will be called in order to adjust the width of the `:caller` row
+ - `reg` - registers the file from which logging methods will be called to adjust the width of the `:caller` row
 
 ### Default config
 
 ```js
-import Logger from 'bellman'
+const Logger = require('bellman')
 
 new Logger()
   .reg()
@@ -28,7 +28,7 @@ new Logger()
 ### Custom config
 
 ```js
-import Logger from 'bellman'
+const Logger = require('bellman')
 
 const userConfig = {
   timeTmp: 'HH:mm',
