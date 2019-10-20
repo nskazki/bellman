@@ -1,20 +1,13 @@
 {
   "name": "bellman",
-  "version": "1.1.9",
-  "description": "pretty console logger",
-  "main": "build",
-  "scripts": {
-    "prepublish": "npm run build",
-    "build": "babel src -d build",
-    "eslint": "eslint src example",
-    "test": "npm run eslint"
-  },
-  "keywords": [
-    "logger",
-    "console"
-  ],
   "author": "nskazki@gmail.com",
   "license": "MIT",
+  "version": "1.1.9",
+  "description": "Yet another console logger. A pretty and powerful one, though.",
+  "homepage": "https://github.com/nskazki/bellman",
+  "keywords": [
+    "logger"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/nskazki/bellman.git"
@@ -22,7 +15,13 @@
   "bugs": {
     "url": "https://github.com/nskazki/bellman/issues"
   },
-  "homepage": "https://github.com/nskazki/bellman#readme",
+  "main": "build",
+  "scripts": {
+    "prepublish": "yarn run build",
+    "build": "babel src -d build",
+    "eslint": "eslint .",
+    "test": "yarn run eslint"
+  },
   "dependencies": {
     "chalk": "^2.4.2",
     "lodash": "^4.17.15",
